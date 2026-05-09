@@ -25,6 +25,7 @@ export default function useLoginScreenLayout(): LoginScreenProps {
   }, []);
 
   const onSubmitPress = useCallback(async () => {
+    if (isSubmitting) return;
     const trimmed = email.trim();
     if (!trimmed || !password) {
       Alert.alert('Entrar', 'Preencha e-mail e senha.');
@@ -33,7 +34,7 @@ export default function useLoginScreenLayout(): LoginScreenProps {
     setIsSubmitting(true);
     try {
       const { error } = await supabase.auth.signInWithPassword({
-        email: trimmed,
+        email: trimmed.toLowerCase(),
         password,
       });
       if (error) {
@@ -42,9 +43,10 @@ export default function useLoginScreenLayout(): LoginScreenProps {
     } finally {
       setIsSubmitting(false);
     }
-  }, [email, password]);
+  }, [email, isSubmitting, password]);
 
   const onForgotPasswordPress = useCallback(async () => {
+    if (isSubmitting) return;
     const trimmed = email.trim();
     if (!trimmed) {
       Alert.alert('Recuperar senha', 'Informe seu e-mail no campo acima.');
@@ -53,7 +55,9 @@ export default function useLoginScreenLayout(): LoginScreenProps {
     setIsSubmitting(true);
     try {
       const redirectTo = Linking.createURL('/');
-      const { error } = await supabase.auth.resetPasswordForEmail(trimmed, { redirectTo });
+      const { error } = await supabase.auth.resetPasswordForEmail(trimmed.toLowerCase(), {
+        redirectTo,
+      });
       if (error) {
         Alert.alert('Recuperação de senha', authErrorMessage(error.message));
         return;
@@ -65,7 +69,7 @@ export default function useLoginScreenLayout(): LoginScreenProps {
     } finally {
       setIsSubmitting(false);
     }
-  }, [email]);
+  }, [email, isSubmitting]);
 
   const onRegisterPress = useCallback(() => {
     const base = env.apiBase.trim();

@@ -1,4 +1,5 @@
-import { ActivityIndicator, View } from 'react-native';
+import { ActivityIndicator } from 'react-native';
+import Animated, { Easing, FadeIn } from 'react-native-reanimated';
 
 import { LoginScreen, useLoginScreenLayout } from '@/features/auth';
 import { HomeScreen, useHomeScreen } from '@/features/home';
@@ -12,9 +13,11 @@ export default function IndexRoute() {
 
   if (!isSessionHydrated) {
     return (
-      <View className="flex-1 items-center justify-center bg-neutral-50 dark:bg-neutral-950">
+      <Animated.View
+        className="flex-1 items-center justify-center bg-neutral-50 dark:bg-neutral-950"
+        entering={FadeIn.duration(320).easing(Easing.out(Easing.cubic))}>
         <ActivityIndicator accessibilityLabel="Carregando sessão" size="large" />
-      </View>
+      </Animated.View>
     );
   }
 
