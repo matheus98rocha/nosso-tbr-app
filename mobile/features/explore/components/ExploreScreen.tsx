@@ -1,5 +1,7 @@
 import { Pressable, Text, TextInput, View } from 'react-native';
 
+import { textInputDefaultStyle } from '@/lib/textInputFieldStyles';
+
 import type { ExploreScreenProps } from './ExploreScreen.types';
 
 export default function ExploreScreen({
@@ -22,7 +24,8 @@ export default function ExploreScreen({
         onChangeText={onEmailChange}
         placeholder="seu@email.com"
         placeholderTextColor="#a3a3a3"
-        className="rounded-xl border border-neutral-300 bg-neutral-50 px-4 py-3 text-base text-neutral-900 dark:border-neutral-600 dark:bg-neutral-900 dark:text-neutral-50"
+        style={textInputDefaultStyle}
+        className="rounded-xl border border-neutral-300 bg-neutral-50 text-base text-neutral-900 dark:border-neutral-600 dark:bg-neutral-900 dark:text-neutral-50"
       />
       {errorMessage ? (
         <Text className="text-sm text-red-600 dark:text-red-400">{errorMessage}</Text>

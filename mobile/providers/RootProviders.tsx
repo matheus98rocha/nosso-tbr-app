@@ -1,9 +1,11 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { useMemo } from 'react';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 import useSessionBootstrap from '@/hooks/useSessionBootstrap';
 
+import ThemePreferenceHydration from './ThemePreferenceHydration';
 import type { RootProvidersProps } from './RootProviders.types';
 
 function SessionRunner() {
@@ -26,10 +28,13 @@ export default function RootProviders({ children }: RootProvidersProps) {
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
-      <QueryClientProvider client={queryClient}>
-        <SessionRunner />
-        {children}
-      </QueryClientProvider>
+      <SafeAreaProvider>
+        <ThemePreferenceHydration />
+        <QueryClientProvider client={queryClient}>
+          <SessionRunner />
+          {children}
+        </QueryClientProvider>
+      </SafeAreaProvider>
     </GestureHandlerRootView>
   );
 }

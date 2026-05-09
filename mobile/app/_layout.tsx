@@ -4,7 +4,7 @@ import 'react-native-reanimated';
 import '../global.css';
 
 import * as SplashScreen from 'expo-splash-screen';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 import RootLayoutNav from '@/components/RootLayoutNav';
 import useRootBootstrap from '@/hooks/useRootBootstrap';
@@ -16,6 +16,7 @@ SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
   const { error, isReady } = useRootBootstrap();
+  const [rootSubtreeReady, setRootSubtreeReady] = useState(false);
 
   useEffect(() => {
     if (error) {
@@ -23,7 +24,18 @@ export default function RootLayout() {
     }
   }, [error]);
 
-  if (!isReady) {
+  useEffect(() => {
+    if (!isReady) {
+      setRootSubtreeReady(false);
+      return;
+    }
+    const frame = requestAnimationFrame(() => {
+      setRootSubtreeReady(true);
+    });
+    return () => cancelAnimationFrame(frame);
+  }, [isReady]);
+
+  if (!isReady || !rootSubtreeReady) {
     return null;
   }
 
