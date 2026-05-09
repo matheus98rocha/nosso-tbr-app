@@ -56,6 +56,7 @@ export default function LoginScreen({
               autoComplete="email"
               autoCorrect={false}
               keyboardType="email-address"
+              returnKeyType="next"
               value={email}
               onChangeText={onEmailChange}
               placeholder="seu@email.com"
@@ -74,6 +75,7 @@ export default function LoginScreen({
                 autoCorrect={false}
                 secureTextEntry={passwordHidden}
                 textContentType="password"
+                returnKeyType="done"
                 value={password}
                 onChangeText={onPasswordChange}
                 placeholder="Digite sua senha"
@@ -99,6 +101,7 @@ export default function LoginScreen({
             accessibilityHint="Abre o fluxo de recuperação de senha"
             accessibilityRole="button"
             className="mt-3 self-end py-2 active:opacity-70"
+            disabled={isSubmitting}
             onPress={onForgotPasswordPress}>
             <Text className="text-sm font-medium text-sky-700 dark:text-sky-400">
               Esqueci minha senha
@@ -124,6 +127,7 @@ export default function LoginScreen({
             <Pressable
               accessibilityRole="button"
               className="mt-3 rounded-xl py-2 px-4 active:opacity-70"
+              disabled={isSubmitting}
               onPress={onRegisterPress}>
               <Text className="text-center text-sm font-semibold text-sky-700 dark:text-sky-400">
                 Criar conta com convite
