@@ -142,7 +142,6 @@ export default function LoginScreen({
               accessibilityHint="Abre o fluxo de recuperação de senha"
               accessibilityRole="button"
               className="mt-3 self-end py-2 active:opacity-70"
-              disabled={isSubmitting}
               onPress={onForgotPasswordPress}
             >
               <Text className="text-sm font-medium text-sky-700 dark:text-sky-400">
@@ -184,7 +183,6 @@ export default function LoginScreen({
             <Pressable
               accessibilityRole="button"
               className="mt-3 rounded-xl py-2 px-4 active:opacity-70"
-              disabled={isSubmitting}
               onPress={onRegisterPress}
             >
               <Text className="text-center text-sm font-semibold text-sky-700 dark:text-sky-400">

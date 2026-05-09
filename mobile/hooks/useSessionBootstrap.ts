@@ -25,14 +25,13 @@ export default function useSessionBootstrap(): void {
   const syncSession = useCallback(async () => {
     const { data, error } = await supabase.auth.getSession();
     if (error) {
-      clearUser();
-      setSessionHydrated(true);
+      applySessionUser(null);
       Alert.alert('Sessão', 'Não foi possível validar a sessão atual. Faça login novamente.');
       return;
     }
     const sessionUser = data.session?.user;
     applySessionUser(sessionUser);
-  }, [applySessionUser, clearUser, setSessionHydrated]);
+  }, [applySessionUser]);
 
   useEffect(() => {
     void syncSession();
